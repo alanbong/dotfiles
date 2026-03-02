@@ -1,5 +1,5 @@
 ```
 git clone
-chmod +x linx_all.sh
-POOF! You atr amazing!
+chmod +x link_all.sh
+POOF! You are amazing!
 ```
