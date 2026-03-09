@@ -4,7 +4,6 @@ my_conf=(
     "vim/.vimrc:.vimrc"
     "nvim/:.config/nvim"
     "zsh/.zshrc:.zshrc"
-    "git.gitconfig:.gitconfig"
 )
 
 dotfiles_dir=$(pwd)
