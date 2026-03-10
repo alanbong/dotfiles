@@ -13,13 +13,13 @@ if [[ "$TERM" == "linux" ]]; then
     zstyle ':vcs_info:*' unstagedstr '%F{red}!%f'
     
     PROMPT_SYMBOL=">>>"
-    USER_SEP="->"
+    USER_SEP=":"
 else
     zstyle ':vcs_info:*' stagedstr '%F{green}✚%f'
     zstyle ':vcs_info:*' unstagedstr '%F{red}●%f'
     
     PROMPT_SYMBOL="❯❯❯"
-    USER_SEP=""
+    USER_SEP=":"
 fi
 
 zstyle ':vcs_info:git*' formats " %F{blue}%b%f %u%c"
