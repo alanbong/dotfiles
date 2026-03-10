@@ -1,0 +1,9 @@
+Xft.dpi: 192
+Xft.autohint: 0
+Xft.lcdfilter: lcdfilter
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+i3wm.font: JetBrainsMono Nerd Font 8
