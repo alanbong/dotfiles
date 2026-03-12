@@ -2,8 +2,11 @@
 my_conf=(
     "tmux/.tmux.conf:.tmux.conf"
     "vim/.vimrc:.vimrc"
-    "nvim/:.config/nvim"
     "zsh/.zshrc:.zshrc"
+    "nvim:.config/nvim"
+    "karabiner:.config/karabiner"
+    "kitty:.config/kitty"
+    "xnviewmp:.config/xnviewmp"
 )
 
 dotfiles_dir=$(pwd)
