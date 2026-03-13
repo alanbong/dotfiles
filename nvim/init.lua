@@ -10,11 +10,7 @@ vim.cmd('set noerrorbells')
 vim.cmd('set novisualbell')
 
 -- paste settings
-if vim.fn.has('unnamedplus') == 1 then
-    vim.opt.clipboard:prepend('unnamedplus')
-else
-    vim.opt.clipboard:prepend('unnamed')
-end
+vim.opt.clipboard = "unnamedplus"
 
 vim.cmd('filetype plugin indent on')
 
