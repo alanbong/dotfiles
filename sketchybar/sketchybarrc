@@ -1,0 +1,116 @@
+#!/bin/bash
+
+# Load all vars
+source "$HOME/.config/sketchybar/variables.sh"
+
+##### Bar Appearance #####
+
+sketchybar --bar height=35 \
+	color="$BAR_COLOR" \
+	position=top \
+	sticky=on \
+	notch_width=200 \
+	--default updates=when_shown \
+	icon.font="$FONT:Bold:13.5" \
+	icon.color="$ICON_COLOR" \
+	icon.padding_left="$PADDINGS" \
+	icon.padding_right="$PADDINGS" \
+	label.font="$FONT:Bold:13.0" \
+	label.color="$LABEL_COLOR" \
+	label.padding_left="$PADDINGS" \
+	label.padding_right="$PADDINGS" \
+	background.padding_right="$PADDINGS" \
+	background.padding_left="$PADDINGS" \
+	popup.background.border_width=1 \
+	popup.background.corner_radius=11 \
+	popup.background.border_color="$POPUP_BORDER_COLOR" \
+	popup.background.color="$POPUP_BACKGROUND_COLOR" \
+	popup.background.shadow.drawing="$SHADOW"
+
+
+
+##### AeroSpace Workspaces #####
+sketchybar --add event aerospace_workspace_change
+
+ALL_SPACES=("1" "2" "3" "4" "5" "6" "7" "8")
+
+for sid in "${ALL_SPACES[@]}"; do
+    sketchybar --add item "space.$sid" left \
+        --subscribe "space.$sid" aerospace_workspace_change \
+        --set "space.$sid" \
+            label.drawing=off \
+            icon.font="$FONT" \
+            icon.padding_left=10 \
+            icon.padding_right=10 \
+            background.padding_left=2 \
+            background.padding_right=2 \
+            click_script="aerospace workspace ${sid%%:*}" \
+            script="$PLUGIN_DIR/aerospace.sh $sid"
+
+    if [ "$sid" = "5" ]; then
+        sketchybar --add item space.separator left \
+            --set space.separator \
+                icon="┃" \
+                icon.font="$FONT" \
+                icon.color="$COMMENT" \
+                label.drawing=off \
+                background.padding_left=2 \
+                background.padding_right=2
+    fi
+done
+
+# bracket spaces
+sketchybar --add bracket spaces '/space\..*/' \
+    --set spaces \
+        background.border_width="$BORDER_WIDTH" \
+        background.border_color="$RED" \
+        background.corner_radius="$CORNER_RADIUS" \
+        background.color="$BAR_COLOR" \
+        background.height=26 \
+        background.drawing=on
+
+# arrow separator
+sketchybar --add item separator left \
+    --set separator \
+        icon= \
+        icon.font="$FONT" \
+        background.padding_left=20 \
+        background.padding_right=15 \
+        label.drawing=off \
+        icon.color="$YELLOW"
+
+# acive app
+sketchybar --add item front_app left \
+    --set front_app \
+        label.font="$FONT" \
+        label.color="$WHITE" \
+        icon.drawing=off \
+        script="$PLUGIN_DIR/front_app.sh" \
+    --subscribe front_app front_app_switched
+
+##### Adding Right Items #####
+
+add_item "clock" "right" "$MAGENTA" 1 "󰥔"
+
+add_item "calendar" "right" "$BLUE" 15 ""
+
+add_item "battery" "right" "$CYAN" 60
+sketchybar --subscribe battery power_source_change system_woke
+
+add_item "cpu" "right" "$YELLOW" 2 ""
+sketchybar --set cpu label.width=45
+                     
+add_item "battery" "right" "$CYAN" 60
+sketchybar --subscribe battery power_source_change system_woke
+
+add_item "volume" "right" "$GREEN" 0
+sketchybar --subscribe volume volume_change 
+
+add_item "language" "right" "$ORANGE" 0 "󰌌"
+sketchybar --add event layout_change "AppleSelectedInputSourcesChangedNotification"
+sketchybar --subscribe language layout_change
+
+##### Finalize #####
+sketchybar --hotload true
+
+sketchybar --update

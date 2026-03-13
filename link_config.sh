@@ -5,6 +5,9 @@ my_conf=(
     "zsh/.zshrc:.zshrc"
     "nvim/:.config/nvim"
     "alacritty/:.config/alacritty"
+    "nvim:.config/nvim"
+    "kitty:.config/kitty"
+    "xnviewmp:.config/xnviewmp"
 )
 
 dotfiles_dir=$(pwd)
