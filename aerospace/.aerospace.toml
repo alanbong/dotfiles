@@ -154,6 +154,8 @@ outer.bottom     = 5
 outer.right      = 5
 outer.top        = [{ monitor.secondary = 40 }, 5]
 
+# check app ids with aerospace list-apps
+
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
 run = 'move-node-to-workspace 2'
@@ -164,6 +166,10 @@ run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.gajim.gajim' 
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
