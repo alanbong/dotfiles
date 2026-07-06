@@ -1,34 +1,31 @@
 require('config.lazy')
 
--- base
-vim.cmd('set encoding=utf-8')
-vim.cmd('syntax on')
-vim.cmd('set mouse=a')
+-- Base settings
+vim.opt.encoding = "utf-8"
+vim.opt.mouse = "a"
 
--- turn off error sounds
-vim.cmd('set noerrorbells')
-vim.cmd('set novisualbell')
+-- Turn off error sounds
+vim.opt.errorbells = false
+vim.opt.visualbell = false
 
--- paste settings
+-- Clipboard sync (Requires wl-clipboard for Wayland or xclip for X11 on Linux)
 vim.opt.clipboard = "unnamedplus"
 
-vim.cmd('filetype plugin indent on')
-
---turn off pyindent
+-- Python indentation overrides
 vim.g.pyindent_open_paren = 'shiftwidth()'
 vim.g.pyindent_nested_paren = 'shiftwidth()'
 vim.g.pyindent_continue = 'shiftwidth()'
 
--- interface
-vim.cmd('set number')
-vim.cmd('set cursorline')
-vim.cmd('set scrolloff=8')
+-- Interface settings
+vim.opt.number = true
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8
 
--- tabs
-vim.cmd('set expandtab')
-vim.cmd('set tabstop=4')
-vim.cmd('set softtabstop=4')
-vim.cmd('set shiftwidth=4')
+-- Tabs and spaces (4 spaces layout)
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- vim.cmd('set smartindent')
 
