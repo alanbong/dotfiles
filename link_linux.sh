@@ -5,6 +5,8 @@ my_conf=(
     "i3/:.config/i3"
 )
 
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Link Linux specific dotfiles
 source "$script_dir/link_core.sh"
 
