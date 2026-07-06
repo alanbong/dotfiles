@@ -5,13 +5,10 @@ my_conf=(
     "karabiner:.config/karabiner"
 )
 
-dotfiles_dir=$(pwd)
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-for item in "${my_conf[@]}"; do
-    IFS=":" read -r source destination <<< "$item"
-    destination="$HOME/$destination"
-    mkdir -p "$(dirname "$destination")"
+# Link macOS specific dotfiles
+source "$script_dir/link_core.sh"
 
-    ln -sf "$dotfiles_dir/$source" "$destination"
-done
-
+# Link universal dotfiles
+source "$script_dir/link_universal.sh"

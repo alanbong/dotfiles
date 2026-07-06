@@ -5,13 +5,8 @@ my_conf=(
     "i3/:.config/i3"
 )
 
-dotfiles_dir=$(pwd)
+# Link Linux specific dotfiles
+source "$script_dir/link_core.sh"
 
-for item in "${my_conf[@]}"; do
-    IFS=":" read -r source destination <<< "$item"
-    destination="$HOME/$destination"
-    mkdir -p "$(dirname "$destination")"
-
-    ln -sf "$dotfiles_dir/$source" "$destination"
-done
-
+# Link universal dotfiles
+source "$script_dir/link_universal.sh"

@@ -3,20 +3,12 @@ my_conf=(
     "tmux/.tmux.conf:.tmux.conf"
     "vim/.vimrc:.vimrc"
     "zsh/.zshrc:.zshrc"
-    "nvim/:.config/nvim"
-    "alacritty/:.config/alacritty"
+    "alacritty:.config/alacritty"
     "nvim:.config/nvim"
     "kitty:.config/kitty"
     "xnviewmp:.config/xnviewmp"
 )
 
-dotfiles_dir=$(pwd)
-
-for item in "${my_conf[@]}"; do
-    IFS=":" read -r source destination <<< "$item"
-    destination="$HOME/$destination"
-    mkdir -p "$(dirname "$destination")"
-
-    ln -sf "$dotfiles_dir/$source" "$destination"
-done
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$script_dir/link_core.sh"
 
