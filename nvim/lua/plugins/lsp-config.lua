@@ -1,12 +1,12 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 return {
-	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end,
+    },
+    {
         "neovim/nvim-lspconfig",
         config = function()
             local opts = { noremap = true, silent = true }
@@ -17,22 +17,23 @@ return {
             vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         end,
     },
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			local server_requirements = {
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "neovim/nvim-lspconfig" },
+        config = function()
+            -- Карта зависимостей: сервер -> утилита в системе
+            local server_requirements = {
                 lua_ls = "lua",
                 vimls = "vim",
                 pylsp = "python3",
                 clangd = "clang",
-                yamlls = "npm", -- Требует Node.js/npm для сборки
-                bashls = "npm",  -- Требует Node.js/npm
+                yamlls = "npm",
+                bashls = "npm",
                 gopls = "go",
-                ts_ls = "npm",   -- Требует Node.js/npm
+                ts_ls = "npm",
             }
 
-			local servers_to_install = {}
+            local servers_to_install = {}
             for server, binary in pairs(server_requirements) do
                 if vim.fn.executable(binary) == 1 then
                     table.insert(servers_to_install, server)
@@ -43,10 +44,12 @@ return {
                 ensure_installed = servers_to_install,
                 auto_install = true,
             })
-
-            local lspconfig = require("lspconfig")
             for _, server in ipairs(servers_to_install) do
-                lspconfig[server].setup({})
+                if vim.lsp.config then
+                    vim.lsp.config[server] = {}
+                else
+                    require("lspconfig")[server].setup({})
+                end
             end
         end,
     },
