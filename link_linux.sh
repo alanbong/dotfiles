@@ -13,4 +13,4 @@ source "$script_dir/link_core.sh"
 # Link universal dotfiles
 source "$script_dir/link_universal.sh"
 
-sudo pacman -S --needed --noconfirm base-devel nodejs npm xclip wl-clipboard
+sudo pacman -S --needed --noconfirm base-devel nodejs npm xclip wl-clipboard inotify-tools

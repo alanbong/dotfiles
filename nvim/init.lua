@@ -27,6 +27,14 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
+-- Custom keys
+vim.keymap.set('n', '<F5>', ':w | sp | term python3 %<CR>')
+vim.keymap.set('n', '<leader>r', function()
+    package.loaded['plugins'] = nil
+    vim.cmd('source $MYVIMRC')
+    vim.notify('Reload configuration', vim.log.levels.INFO)
+end, { desc = 'Reload configuration' })
+
 -- vim.cmd('set smartindent')
 
 -- visual

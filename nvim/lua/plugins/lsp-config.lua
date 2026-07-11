@@ -21,11 +21,11 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
-            -- Карта зависимостей: сервер -> утилита в системе
             local server_requirements = {
                 lua_ls = "lua",
                 vimls = "vim",
-                pylsp = "python3",
+                -- pylsp = "python3",
+                pyright = "python3",
                 clangd = "clang",
                 yamlls = "npm",
                 bashls = "npm",
@@ -44,14 +44,7 @@ return {
                 ensure_installed = servers_to_install,
                 auto_install = true,
             })
-            for _, server in ipairs(servers_to_install) do
-                if vim.lsp.config then
-                    vim.lsp.config[server] = {}
-                else
-                    require("lspconfig")[server].setup({})
-                end
-            end
-        end,
+        end
     },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
