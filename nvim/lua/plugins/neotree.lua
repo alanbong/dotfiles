@@ -10,6 +10,15 @@ return {
 		keys = {
 			{ "<leader>n", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
 		},
+        opts = {
+            filesystem = {
+                use_libuv_file_watcher = true,
+                follow_current_file = {
+                    enabled = true,
+                    leave_dirs_open = false,
+                },
+            },
+        },
 	},
 
 	{
