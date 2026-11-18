@@ -223,8 +223,17 @@ setup_chaotic_aur() {
         sed -i '/^[[:space:]]*#[[:space:]]*\[multilib\]/,/^[[:space:]]*#[[:space:]]*Include/ s/^[[:space:]]*#[[:space:]]*//' /etc/pacman.conf
     fi
 
+    if ! grep -q '^DisableDownloadTimeout' /etc/pacman.conf; then
+        sed -i '/^\[options\]/a DisableDownloadTimeout' /etc/pacman.conf
+    fi
+
     if ! grep -q '^\[chaotic-aur\]' /etc/pacman.conf; then
         cp -n /etc/pacman.conf /etc/pacman.conf.bak
+
+        pacman -Sy --noconfirm --needed reflector pacman-contrib || return 1
+
+        cp -n /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+        reflector --protocol https --latest 15 --sort rate --save /etc/pacman.d/mirrorlist
 
         pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com || return 1
         pacman-key --lsign-key 3056513887B78AEB || return 1
@@ -233,9 +242,15 @@ setup_chaotic_aur() {
             'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
             'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' || return 1
 
+        if [ -f /etc/pacman.d/chaotic-mirrorlist ]; then
+            cp -n /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist.bak
+            rankmirrors -n 5 /etc/pacman.d/chaotic-mirrorlist.bak > /etc/pacman.d/chaotic-mirrorlist
+        fi
+
         printf '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n' >> /etc/pacman.conf
     fi
 }
+
 
 deploy_configs() {
     local config_source="$REPO_DIR/.config"
@@ -325,6 +340,7 @@ if ! setup_chaotic_aur; then
     echo "ERROR: Failed to set up the Chaotic-AUR repository. Aborting installation."
     exit 1
 fi
+
 
 echo "Updating system and installing packages via pacman..."
 if ! pacman -Syu --noconfirm --needed "${PACKAGES[@]}"; then
